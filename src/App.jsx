@@ -42,7 +42,7 @@ const spreads = [
     id: 'cover',
     left: {
       label: 'Our wedding story',
-      storyTitle: 'This is our Story Of how we met',
+      storyTitle: 'This is our story of how we met',
       body: [
         'So alright, dis how it wen happen.',
         'Our whole love story?',
