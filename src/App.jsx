@@ -391,51 +391,6 @@ function App() {
             ) : null}
           </article>
         </section>
-
-        <footer className="book-footer">
-          <div className="footer-controls">
-            <button
-              type="button"
-              onClick={goPrev}
-              disabled={spreadIndex === 0 || isTurning}
-              className="nav-button nav-button--prev"
-            >
-              ◀ Previous page
-            </button>
-            <div className="page-indicator">
-              Page {spreadIndex + 1} of {totalSpreads}
-            </div>
-            <button
-              type="button"
-              onClick={goNext}
-              disabled={spreadIndex === totalSpreads - 1 || isTurning}
-              className="nav-button nav-button--next"
-            >
-              Next page ▶
-            </button>
-          </div>
-          <div className="page-dots">
-            {spreads.map((spread, index) => (
-              <button
-                key={spread.id}
-                type="button"
-                className={[
-                  'page-dot',
-                  index === spreadIndex ? 'page-dot--active' : '',
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
-                onClick={() => goToSpread(index)}
-                disabled={isTurning}
-                aria-label={`Go to page ${index + 1}`}
-              />
-            ))}
-          </div>
-          <div className="footer-note">
-            Turn the pages to explore the details of our tropical wedding at
-            Wai Kai.
-          </div>
-        </footer>
       </main>
     </div>
   )

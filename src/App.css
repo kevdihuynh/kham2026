@@ -332,12 +332,38 @@
 
 .page-body--scroll {
   max-height: 18rem;
-  overflow-y: auto;
-  padding-right: 0.3rem;
+  /* Always show a scrollbar so guests know they can scroll the story */
+  overflow-y: scroll;
+  padding-right: 0.5rem;
+  scrollbar-gutter: stable;
 }
 
 .page-body p {
   margin: 0 0 0.9rem;
+}
+
+/* Make the story scrollbar clearly visible */
+.page-body--scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #1f6c4b rgba(12, 44, 32, 0.08);
+}
+
+.page-body--scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.page-body--scroll::-webkit-scrollbar-track {
+  background: rgba(12, 44, 32, 0.06);
+  border-radius: 999px;
+}
+
+.page-body--scroll::-webkit-scrollbar-thumb {
+  background: #1f6c4b;
+  border-radius: 999px;
+}
+
+.page-body--scroll::-webkit-scrollbar-thumb:hover {
+  background: #154534;
 }
 
 .page-body p:last-child {
