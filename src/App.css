@@ -1,0 +1,751 @@
+.page-root {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0;
+  box-sizing: border-box;
+  background: radial-gradient(circle at top left, #f7fff7 0, #f5fbf4 40%, #e0f2e8 75%, #d2ece1 100%);
+  color: #1c2b22;
+}
+
+.tropical-background {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.leaf {
+  position: absolute;
+  border-radius: 60% 40% 65% 35%;
+  background: radial-gradient(circle at 30% 20%, #f7fff7 0, #7ecf97 32%, #1f7a53 85%);
+  opacity: 0.22;
+  filter: blur(0.5px);
+  transform-origin: center;
+}
+
+.leaf-1 {
+  width: 420px;
+  height: 420px;
+  top: -60px;
+  left: -120px;
+  transform: rotate(-18deg);
+}
+
+.leaf-2 {
+  width: 380px;
+  height: 380px;
+  bottom: -120px;
+  right: -80px;
+  transform: rotate(26deg);
+}
+
+.leaf-3 {
+  width: 260px;
+  height: 260px;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%) rotate(-12deg);
+}
+
+.book-shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  max-width: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.5rem 1.5rem;
+  gap: 1.25rem;
+  box-sizing: border-box;
+}
+
+.site-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: #285240;
+}
+
+/* Top navigation tabs */
+
+.page-tabs-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.page-tabs-toggle {
+  display: none;
+  background: rgba(246, 255, 249, 0.95);
+  border-radius: 999px;
+  border: 1px solid rgba(38, 92, 67, 0.55);
+  padding: 0.4rem 0.55rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 0.22rem; /* slightly more space between lines for clearer X */
+  flex-direction: column; /* stack lines vertically for hamburger icon */
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.page-tabs-toggle-line {
+  width: 16px;
+  height: 2px;
+  border-radius: 999px;
+  background: #325545;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    background 0.2s ease;
+}
+
+.page-tabs-toggle--open {
+  background: #1f6c4b;
+  border-color: #1f6c4b;
+  box-shadow: 0 10px 22px rgba(14, 63, 42, 0.32);
+}
+
+.page-tabs-toggle--open .page-tabs-toggle-line {
+  background: #f6fff9;
+}
+
+.page-tabs-toggle--open .page-tabs-toggle-line:nth-child(1) {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.page-tabs-toggle--open .page-tabs-toggle-line:nth-child(2) {
+  opacity: 0;
+}
+
+.page-tabs-toggle--open .page-tabs-toggle-line:nth-child(3) {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+.page-tabs-toggle-shaka {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.page-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  padding: 0.35rem 0.4rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(246, 255, 249, 0.9);
+  box-shadow: 0 8px 24px rgba(12, 44, 32, 0.12);
+}
+
+.page-tab {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  background: transparent;
+  color: #325545;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.page-tab--active {
+  background: #1f6c4b;
+  color: #f6fff9;
+  border-color: #1f6c4b;
+  transform: translateY(-1px);
+}
+
+.page-tab:disabled {
+  opacity: 0.55;
+  cursor: default;
+  transform: none;
+}
+
+.header-names {
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+
+.header-details {
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.book {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0;
+  height: 100%;
+  background: rgba(252, 255, 252, 0.9);
+  border-radius: 20px;
+  box-shadow:
+    0 24px 55px rgba(12, 44, 32, 0.15),
+    0 0 0 1px rgba(8, 32, 22, 0.06);
+  overflow: visible;
+  /* 3D space for page flip */
+  perspective: 1600px;
+}
+
+.book::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), transparent 60%);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.book-spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: linear-gradient(to bottom, rgba(8, 32, 22, 0.12), rgba(8, 32, 22, 0.02));
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6);
+  z-index: 2;
+}
+
+.book-page {
+  position: relative;
+  padding: 2.8rem 2.4rem;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    /* Slightly stronger overlay so the artwork is a bit more faded */
+    linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(243, 252, 247, 0.75)),
+    url('./assets/page-background.jpg') center / cover no-repeat;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.book-page--left {
+  border-right: 1px solid rgba(8, 32, 22, 0.06);
+  box-shadow: inset -18px 0 24px rgba(8, 32, 22, 0.03);
+}
+
+.book-page--right {
+  box-shadow: inset 18px 0 24px rgba(8, 32, 22, 0.04);
+}
+
+.page-inner {
+  max-width: 420px;
+}
+
+.page-inner--left {
+  margin: 0 auto;
+}
+
+.page-inner--right {
+  margin: 0 auto;
+}
+
+.page-label {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.64rem;
+  /* Make section labels crisper and less "faded" */
+  color: #234034;
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+}
+
+.page-heading {
+  font-size: 1.45rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 0 1.25rem;
+  color: #1e3b2d;
+}
+
+.story-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  color: #163226;
+}
+
+.page-title {
+  font-size: 2.6rem;
+  margin: 0 0 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #163226;
+}
+
+.page-subtitle {
+  margin: 0 0 0.25rem;
+  font-size: 0.98rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #406854;
+}
+
+.page-location {
+  margin: 0 0 1.4rem;
+  font-size: 0.92rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #305343;
+}
+
+.page-accent {
+  margin: 0 0 1.8rem;
+  font-size: 0.98rem;
+  color: #2b4b3a;
+}
+
+.page-body {
+  font-size: 0.96rem;
+  line-height: 1.8;
+  color: #26372f;
+}
+
+.page-body--scroll {
+  max-height: 18rem;
+  overflow-y: auto;
+  padding-right: 0.3rem;
+}
+
+.page-body p {
+  margin: 0 0 0.9rem;
+}
+
+.page-body p:last-child {
+  margin-bottom: 0;
+}
+
+.page-timeline {
+  list-style: none;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  font-size: 0.94rem;
+}
+
+.page-timeline li {
+  display: grid;
+  grid-template-columns: 5.2rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.35rem 0;
+}
+
+.timeline-time {
+  font-weight: 600;
+  color: #315847;
+  font-size: 0.86rem;
+}
+
+.timeline-desc {
+  color: #273a30;
+}
+
+.page-list {
+  margin-top: 1.4rem;
+  font-size: 0.94rem;
+}
+
+.page-list-title {
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin: 0 0 0.7rem;
+  color: #365947;
+}
+
+.page-list dl {
+  margin: 0;
+}
+
+.list-row {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 0.75rem;
+  padding: 0.35rem 0;
+}
+
+.list-row dt {
+  font-weight: 600;
+  color: #315847;
+  font-size: 0.86rem;
+}
+
+.list-row dd {
+  margin: 0;
+  color: #273a30;
+}
+
+.page-note {
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
+  color: #466857;
+}
+
+.page-link {
+  margin-top: 1.4rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.page-link a {
+  color: #1f6c4b;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.page-link a:hover {
+  color: #154534;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 9 / 16; /* vertical video (YouTube Short) */
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 18px 40px rgba(12, 44, 32, 0.3),
+    0 0 0 1px rgba(8, 32, 22, 0.16);
+}
+
+.video-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.collage-image {
+  width: 130%;
+  max-width: none;
+  height: auto;
+  display: block;
+  margin: 0 -15%;
+}
+
+.glossary-list {
+  list-style: none;
+  margin: 1.4rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.glossary-link {
+  width: 100%;
+  text-align: left;
+  border-radius: 999px;
+  border: 1px solid rgba(38, 92, 67, 0.55);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.92);
+  color: #244534;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.glossary-link:hover:not(:disabled) {
+  background: #1f6c4b;
+  color: #f6fff9;
+  border-color: #1f6c4b;
+  box-shadow: 0 10px 22px rgba(14, 63, 42, 0.32);
+  transform: translateY(-1px);
+}
+
+.glossary-link:disabled {
+  opacity: 0.5;
+  cursor: default;
+  box-shadow: none;
+}
+
+.page-cover {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.book-footer {
+  padding: .5rem;
+  position: sticky;
+  bottom: 0;
+  z-index: 5; /* ensure footer/buttons sit above any flipping pages */
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 0.86rem;
+  color: #2d4a3a;
+  background: white; /* half opacity white, no gradient */
+  border-radius: 16px; /* rounded top corners */
+}
+
+.footer-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 520px;
+}
+
+.page-indicator {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.85;
+}
+
+.nav-button {
+  border-radius: 999px;
+  border: 1px solid rgba(38, 92, 67, 0.55);
+  padding: 0.5rem 0.95rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.92);
+  color: #244534;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.nav-button:hover:not(:disabled) {
+  background: #1f6c4b;
+  color: #f6fff9;
+  border-color: #1f6c4b;
+  box-shadow: 0 10px 22px rgba(14, 63, 42, 0.32);
+  transform: translateY(-1px);
+}
+
+.nav-button:disabled {
+  opacity: 0.45;
+  cursor: default;
+  box-shadow: none;
+}
+
+.footer-note {
+  opacity: 0.85;
+}
+
+.page-dots {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.15rem;
+}
+
+.page-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(38, 92, 67, 0.6);
+  background: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    border-color 0.2s ease;
+}
+
+.page-dot--active {
+  background: #1f6c4b;
+  border-color: #1f6c4b;
+  transform: scale(1.25);
+}
+
+.page-dot:disabled {
+  cursor: default;
+}
+
+/* Page turn animation – flip a single page like a book (desktop) */
+
+/* On desktop, only flip the right page when going forward
+   and the left page when going backward. */
+.book--turning.book--next .book-page--right {
+  animation: page-flip-next 0.6s ease forwards;
+  transform-origin: left center;
+}
+
+.book--turning.book--prev .book-page--left {
+  /* flip from the spine side when going backwards */
+  transform-origin: right center;
+  animation: page-flip-prev 0.6s ease forwards;
+}
+
+@keyframes page-flip-next {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(-80deg) translateZ(0);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+@keyframes page-flip-prev {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(80deg) translateZ(0);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+@media (max-width: 880px) {
+  .page-root {
+    padding: 1.5rem 1rem 2.5rem;
+  }
+
+  .page-tabs-toggle {
+    display: inline-flex;
+    position: fixed;
+    top: 0.85rem;
+    right: 1rem;
+    z-index: 20;
+  }
+
+  .page-tabs {
+    display: none;
+  }
+
+  .page-tabs--open {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    position: fixed;
+    top: 3.1rem;
+    left: 0.9rem;
+    right: 0.9rem;
+    padding: 0.6rem 0.75rem 0.8rem;
+    border-radius: 14px; /* more square container around options */
+    z-index: 19;
+    justify-content: flex-start;
+  }
+
+  /* Let the layout grow naturally on small screens */
+  .book-shell {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .book {
+    grid-template-columns: minmax(0, 1fr);
+    height: auto;
+    overflow: hidden; /* avoid flipped pages covering the footer/buttons */
+  }
+
+  .book-spine {
+    display: none;
+  }
+
+  .book-page {
+    padding: 1.8rem 1.5rem;
+  }
+
+  .page-inner--left,
+  .page-inner--right {
+    margin: 0 auto;
+  }
+
+  .page-title {
+    font-size: 2.1rem;
+  }
+
+  .page-body--scroll {
+    max-height: 14rem;
+  }
+
+  /* On mobile, flip the entire book like a single card */
+
+  /* Cancel desktop per-page flip on mobile */
+  .book--turning.book--next .book-page--right,
+  .book--turning.book--prev .book-page--left {
+    animation: none;
+  }
+
+  .book--turning.book--next {
+    animation: book-flip-next 0.6s ease-out forwards;
+    transform-origin: center center;
+  }
+
+  .book--turning.book--prev {
+    animation: book-flip-prev 0.6s ease-out forwards;
+    transform-origin: center center;
+  }
+}
+
+@keyframes book-flip-next {
+  0% {
+    transform: rotateY(0deg) scale(1);
+  }
+  50% {
+    transform: rotateY(-160deg) scale(1.02);
+  }
+  100% {
+    transform: rotateY(-360deg) scale(1);
+  }
+}
+
+@keyframes book-flip-prev {
+  0% {
+    transform: rotateY(0deg) scale(1);
+  }
+  50% {
+    transform: rotateY(160deg) scale(1.02);
+  }
+  100% {
+    transform: rotateY(360deg) scale(1);
+  }
+}
